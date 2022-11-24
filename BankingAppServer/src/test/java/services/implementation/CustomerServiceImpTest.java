@@ -1,19 +1,22 @@
 package services.implementation;
 
 import com.example.bankingappserver.model.Customer;
+import com.example.bankingappserver.model.CustomerDTO;
 import com.example.bankingappserver.repository.CustomerRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import services.CustomerService;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
+@SpringBootTest
 class CustomerServiceImpTest {
 
-    @Autowired
+    @MockBean
     private CustomerRepository customerRepository;
-    @Autowired
-    private CustomerService customerService;
+
+//    @Autowired
+//    private CustomerService customerService;
 
     @BeforeEach
     void setUp() {
@@ -31,7 +34,8 @@ class CustomerServiceImpTest {
     }
 
     @Test
-    void saveNewCustomer() {
+    CustomerDTO whenSavingNewUser_shouldReturnUserDTO() {
+   return null;
     }
 
     @Test
