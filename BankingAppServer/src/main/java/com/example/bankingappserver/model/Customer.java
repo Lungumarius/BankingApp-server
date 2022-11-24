@@ -1,7 +1,6 @@
 package com.example.bankingappserver.model;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -18,7 +17,7 @@ public class Customer {
     private String firstName;
     private String lastName;
     private String email;
-    private Long phone;
+    private String phone;
     private String password;
 
     //customer must have access to his accounts

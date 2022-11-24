@@ -1,11 +1,14 @@
 package services.implementation;
 
+import com.example.bankingappserver.model.Account;
 import com.example.bankingappserver.model.Customer;
 import com.example.bankingappserver.model.CustomerDTO;
 import com.example.bankingappserver.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import services.CustomerService;
+
+import java.util.List;
 
 @Service
 public class CustomerServiceImp implements CustomerService {
@@ -25,6 +28,16 @@ public class CustomerServiceImp implements CustomerService {
 
     @Override
     public CustomerDTO findCustomerByEmailAndPassword(String email, String password) {
+        return null;
+    }
+
+    @Override
+    public void addAccountToCustomer(Account account, Customer customer) {
+
+    }
+
+    @Override
+    public List<Account> findAllAccounts(Customer customer) {
         return null;
     }
 }
