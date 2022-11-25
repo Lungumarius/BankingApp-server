@@ -8,6 +8,7 @@ import com.example.bankingappserver.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Base64;
 import java.util.List;
 
 @Service
@@ -17,8 +18,21 @@ public class CustomerServiceImp implements CustomerService {
     private CustomerRepository customerRepository;
 
     @Override
-    public CustomerDTO saveNewCustomer(Customer customer) {
-        return null;
+    public void saveNewCustomer(CustomerDTO customerDTO) {
+
+        customerRepository.save(convertDTOtoCustomer(customerDTO));
+    }
+
+    @Override
+    public Customer convertDTOtoCustomer(CustomerDTO customerDTO){
+        Customer customer = new Customer();
+        customer.setFirstName(customerDTO.getFirstName());
+        customer.setLastName(customerDTO.getLastName());
+        customer.setEmail(customerDTO.getEmail());
+        customer.setPhone(customerDTO.getPhone());
+        customer.setPassword(Base64.getEncoder().encodeToString(customerDTO.getPassword().getBytes()));
+        return customer;
+
     }
 
     @Override

@@ -9,7 +9,9 @@ import java.util.List;
 
 public interface CustomerService {
 
-    public CustomerDTO saveNewCustomer(Customer customer);
+    public Customer convertDTOtoCustomer(CustomerDTO customerDTO);
+
+    public void saveNewCustomer(CustomerDTO customerDTO);
 
     public CustomerDTO findCustomerById(int id);
 
