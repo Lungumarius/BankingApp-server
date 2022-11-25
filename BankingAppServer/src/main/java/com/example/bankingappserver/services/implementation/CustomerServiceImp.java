@@ -1,12 +1,12 @@
-package services.implementation;
+package com.example.bankingappserver.services.implementation;
 
+import com.example.bankingappserver.DTO.CustomerDTO;
 import com.example.bankingappserver.model.Account;
 import com.example.bankingappserver.model.Customer;
-import com.example.bankingappserver.model.CustomerDTO;
 import com.example.bankingappserver.repository.CustomerRepository;
+import com.example.bankingappserver.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import services.CustomerService;
 
 import java.util.List;
 
@@ -18,7 +18,8 @@ public class CustomerServiceImp implements CustomerService {
 
     @Override
     public CustomerDTO saveNewCustomer(Customer customer) {
-        return null;
+        customerRepository.save(customer);
+        return getCustomerDTO(customer);
     }
 
     @Override
@@ -39,5 +40,10 @@ public class CustomerServiceImp implements CustomerService {
     @Override
     public List<Account> findAllAccounts(Customer customer) {
         return null;
+    }
+
+    private CustomerDTO getCustomerDTO(Customer customer){
+        return new CustomerDTO(customer.getFirstName(), customer.getLastName(), customer.getEmail(),
+                customer.getPhone(), customer.getPassword());
     }
 }

@@ -1,11 +1,11 @@
-package services.implementation;
+package com.example.bankingappserver.services.implementation;
 
 import com.example.bankingappserver.DTO.AccountDTO;
 import com.example.bankingappserver.model.Account;
 import com.example.bankingappserver.repository.AccountRepository;
+import com.example.bankingappserver.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import services.AccountService;
 
 @Service
 public class AccountServiceImp implements AccountService {

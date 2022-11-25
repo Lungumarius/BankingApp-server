@@ -1,4 +1,4 @@
-package services;
+package com.example.bankingappserver.services;
 
 import com.example.bankingappserver.DTO.AccountDTO;
 import com.example.bankingappserver.model.Account;

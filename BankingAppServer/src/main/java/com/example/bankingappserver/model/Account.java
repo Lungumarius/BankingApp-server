@@ -9,7 +9,7 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Account {
     @Id
-    private Integer id;
+    private Long id;
     private Double balance;
     @ManyToOne
     private Customer customer;

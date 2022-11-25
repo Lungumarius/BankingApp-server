@@ -1,10 +1,11 @@
-package services;
+package com.example.bankingappserver.services;
 
+import com.example.bankingappserver.DTO.CustomerDTO;
 import com.example.bankingappserver.model.Account;
 import com.example.bankingappserver.model.Customer;
-import com.example.bankingappserver.model.CustomerDTO;
 
 import java.util.List;
+
 
 public interface CustomerService {
 
