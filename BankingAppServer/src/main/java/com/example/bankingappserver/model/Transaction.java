@@ -1,14 +1,20 @@
 package com.example.bankingappserver.model;
 
 import lombok.Data;
-import org.springframework.data.annotation.Id;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Data
+@Entity
 public class Transaction {
 
     @Id
-    private Integer id;
+    private Long id;
+    @OneToOne
     private Account remitter;
+    @OneToOne
     private Account receiver;
     private double amount;
 }

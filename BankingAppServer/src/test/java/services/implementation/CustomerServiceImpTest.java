@@ -2,7 +2,6 @@ package services.implementation;
 
 import com.example.bankingappserver.DTO.CustomerDTO;
 import com.example.bankingappserver.model.Customer;
-import com.example.bankingappserver.repository.CustomerRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
