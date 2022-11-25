@@ -2,6 +2,7 @@ package com.example.bankingappserver.services.implementation;
 
 import com.example.bankingappserver.DTO.TransactionDTO;
 import com.example.bankingappserver.exceptions.TransactionFailedException;
+import com.example.bankingappserver.exceptions.TransactionNotFoundException;
 import com.example.bankingappserver.model.Account;
 import com.example.bankingappserver.model.Transaction;
 import com.example.bankingappserver.repository.TransactionsRepository;
@@ -28,12 +29,15 @@ public class TransactionServiceImp implements TransactionService {
     }
 
     @Override
-    public List<Transaction> findAllByRemitter(Account remitter) {
+    public List<Transaction> findAllByRemitter(Account remitter) throws TransactionNotFoundException {
         List<Transaction> transactions = new ArrayList<>();
         for (Transaction t : transactionsRepository.findAll()) {
             if (t.getRemitter().equals(remitter)) {
                 transactions.add(t);
             }
+        }
+        if (transactions.isEmpty()){
+            throw new TransactionNotFoundException();
         }
         return transactions;
     }

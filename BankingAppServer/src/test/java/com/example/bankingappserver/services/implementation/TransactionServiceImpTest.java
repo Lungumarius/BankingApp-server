@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -69,7 +71,8 @@ class TransactionServiceImpTest {
 
     @Test
     void whenSearchTransactionByRemitter_thenReturnListOfTransactions() {
-
+        transactionsRepository.saveAll(List.of(transaction1, transaction2, transaction3));
+        assertEquals(3, transactionService.findAllByReceiver(transaction2.getRemitter()).size());
 
     }
 

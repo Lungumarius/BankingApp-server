@@ -19,4 +19,8 @@ public class Account {
     private Customer customer;
 
 
+    public Account(Double balance, Customer customer) {
+        this.balance = balance;
+        this.customer = customer;
+    }
 }

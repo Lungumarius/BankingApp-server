@@ -27,6 +27,13 @@ public class Customer {
     @OneToMany
     private List<Account> accounts = new ArrayList<>();
 
+    public Customer(String firstName, String lastName, String email, String phone, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phone = phone;
+        this.password = password;
+    }
 
     //getters and setters
 
