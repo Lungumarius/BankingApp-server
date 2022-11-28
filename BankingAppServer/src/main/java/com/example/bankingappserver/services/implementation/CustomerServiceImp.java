@@ -1,7 +1,7 @@
 package com.example.bankingappserver.services.implementation;
 
+import com.example.bankingappserver.DTO.AccountDTO;
 import com.example.bankingappserver.DTO.CustomerDTO;
-import com.example.bankingappserver.model.Account;
 import com.example.bankingappserver.model.Customer;
 import com.example.bankingappserver.repository.CustomerRepository;
 import com.example.bankingappserver.services.CustomerService;
@@ -24,6 +24,8 @@ public class CustomerServiceImp implements CustomerService {
 
         customerRepository.save(convertDTOtoCustomer(customerDTO));
     }
+
+
 
     @Override
     public Customer convertDTOtoCustomer(CustomerDTO customerDTO){
@@ -49,9 +51,19 @@ public class CustomerServiceImp implements CustomerService {
 
 
     @Override
-    public CustomerDTO findCustomerById(Long id) {
+    public CustomerDTO findCustomerByMail(String mail) {
 
-        return convertCustomerToDTO(Objects.requireNonNull(customerRepository.findById(id).orElse(null)));
+        return convertCustomerToDTO(Objects.requireNonNull(customerRepository.findCustomerByEmail(mail)));
+    }
+
+    @Override
+    public Long findCustomerIdByMail(String mail) {
+        return null;
+    }
+
+    @Override
+    public CustomerDTO findCustomerByMail(Long id) {
+        return null;
     }
 
     @Override
@@ -63,13 +75,13 @@ public class CustomerServiceImp implements CustomerService {
 //    public void addAccountToCustomer(AccountDTO accountDTO, String email) {
 //
 //    }
-    public Long findCustomerIdByMail(String email){
-        Customer customer = customerRepository.findCustomerByEmail(email);
-        return customer.getId();
-    }
+//    public Long findCustomerIdByMail(String email){
+//        Customer customer = customerRepository.findCustomerByEmail(email);
+//        return customer.getId();
+//    }
 
     @Override
-    public List<Account> findAllAccounts(Customer customer) {
+    public List<AccountDTO> findAllAccounts(String customerMail) {
         return null;
     }
 }
