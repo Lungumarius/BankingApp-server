@@ -2,6 +2,7 @@ package com.example.bankingappserver.services.implementation;
 
 import com.example.bankingappserver.DTO.TransactionDTO;
 import com.example.bankingappserver.exceptions.TransactionFailedException;
+import com.example.bankingappserver.exceptions.TransactionNotFoundException;
 import com.example.bankingappserver.model.Account;
 import com.example.bankingappserver.model.Customer;
 import com.example.bankingappserver.model.Transaction;
@@ -13,10 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 class TransactionServiceImpTest {
@@ -34,6 +37,7 @@ class TransactionServiceImpTest {
     Transaction transaction1;
     Transaction transaction2;
     Transaction transaction3;
+    Transaction transaction4;
 
     @BeforeEach
     void setUp() throws Exception {
@@ -43,17 +47,15 @@ class TransactionServiceImpTest {
         receiver = new Customer("Pepe", "MinusDinero",
                 "pepe@noMucho@elMondo.se", "000000", "que");
 
-        remittersAccount = new Account(5_000_00.00, remitter);
+        remittersAccount = new Account(5_000_000.00, remitter);
         receiversAccount = new Account(-1_000.00, receiver);
-        receiversSecretAccount = new Account(-1_000.00, receiver);
+        receiversSecretAccount = new Account(5_000.00, receiver);
 
-        transaction1 = new Transaction(remittersAccount, receiversAccount, 50.20);
+        transaction1 = new Transaction(remittersAccount, receiversAccount, 500.20);
         transaction2 = new Transaction(remittersAccount, receiversAccount, 150.00);
-        transaction3 = new Transaction(remittersAccount, receiversAccount, 11.50);
+        transaction3 = new Transaction(remittersAccount, receiversAccount, 110.50);
+        transaction4 = new Transaction(receiversSecretAccount, receiversAccount, 239.30);
 
-        transactionService.saveTransAction(transaction1);
-        transactionService.saveTransAction(transaction2);
-        transactionService.saveTransAction(transaction3);
     }
 
     @Test
@@ -70,18 +72,25 @@ class TransactionServiceImpTest {
     }
 
     @Test
-    void whenSearchTransactionByRemitter_thenReturnListOfTransactions() {
-        transactionsRepository.saveAll(List.of(transaction1, transaction2, transaction3));
-        assertEquals(3, transactionService.findAllByReceiver(transaction2.getRemitter()).size());
-
+    void whenSearchTransactionByRemitter_thenReturnListOfTransactions() throws TransactionNotFoundException {
+        when(transactionsRepository.findAllByRemitter(remittersAccount)).thenReturn(Stream.of(transaction1, transaction2,
+                transaction3).collect(Collectors.toList()));
+        assertEquals(3, transactionService.findAllByRemitter(remittersAccount).size());
     }
 
     @Test
-    void findAllByReceiver() {
+    void whenSearchTransactionByReceiver_thenReturnListOfTransactions() throws TransactionNotFoundException {
+        when(transactionsRepository.findAllByReceiver(receiversAccount)).thenReturn(Stream.of(transaction1, transaction2,
+                transaction3, transaction4).collect(Collectors.toList()));
+        assertEquals(4, transactionService.findAllByReceiver(receiversAccount).size());
     }
 
     @Test
-    void findAllByRemitterAndReceiver() {
+    void whenSearchTransactionByRemitterAndReceiver_thenReturnListOfTransactions() throws TransactionNotFoundException {
+        when(transactionsRepository.findAllByRemitterAndReceiver(remittersAccount, receiversAccount))
+                .thenReturn(Stream.of(transaction1, transaction2,
+                transaction3).collect(Collectors.toList()));
+        assertEquals(3, transactionService.findAllByRemitterAndReceiver(remittersAccount,receiversAccount).size());
     }
 
 }

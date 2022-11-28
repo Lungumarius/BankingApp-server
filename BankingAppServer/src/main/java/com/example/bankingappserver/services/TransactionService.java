@@ -11,7 +11,11 @@ import java.util.List;
 public interface TransactionService {
 
     TransactionDTO saveTransAction(Transaction transaction) throws TransactionFailedException;
-    List<Transaction> findAllByRemitter(Account remitter) throws TransactionNotFoundException;
-    List<Transaction> findAllByReceiver(Account receiver);
-    List<Transaction> findAllByRemitterAndReceiver(Account remitter, Account receiver);
+
+    List<TransactionDTO> findAllByRemitter(Account remitter) throws TransactionNotFoundException;
+
+    List<TransactionDTO> findAllByReceiver(Account receiver) throws TransactionNotFoundException;
+
+    List<TransactionDTO> findAllByRemitterAndReceiver(Account remitter, Account receiver) throws TransactionNotFoundException;
+
 }

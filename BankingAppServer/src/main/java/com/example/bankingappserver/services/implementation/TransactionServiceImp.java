@@ -10,8 +10,8 @@ import com.example.bankingappserver.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TransactionServiceImp implements TransactionService {
@@ -29,32 +29,36 @@ public class TransactionServiceImp implements TransactionService {
     }
 
     @Override
-    public List<Transaction> findAllByRemitter(Account remitter) throws TransactionNotFoundException {
-        List<Transaction> transactions = new ArrayList<>();
-        for (Transaction t : transactionsRepository.findAll()) {
-            if (t.getRemitter().equals(remitter)) {
-                transactions.add(t);
-            }
-        }
-        if (transactions.isEmpty()){
+    public List<TransactionDTO> findAllByRemitter(Account remitter) throws TransactionNotFoundException {
+        if (transactionsRepository.findAllByRemitter(remitter).isEmpty()) {
             throw new TransactionNotFoundException();
         }
-        return transactions;
+        return getListOfTransactionDTO(transactionsRepository.findAllByRemitter(remitter));
     }
 
     @Override
-    public List<Transaction> findAllByReceiver(Account receiver) {
-        return null;
+    public List<TransactionDTO> findAllByReceiver(Account receiver) throws TransactionNotFoundException {
+        if (transactionsRepository.findAllByReceiver(receiver).isEmpty()) {
+            throw new TransactionNotFoundException();
+        }
+        return getListOfTransactionDTO(transactionsRepository.findAllByReceiver(receiver));
     }
 
     @Override
-    public List<Transaction> findAllByRemitterAndReceiver(Account remitter, Account receiver) {
-        return null;
+    public List<TransactionDTO> findAllByRemitterAndReceiver(Account remitter, Account receiver) throws TransactionNotFoundException {
+        if (transactionsRepository.findAllByRemitterAndReceiver(remitter, receiver).isEmpty()) {
+            throw new TransactionNotFoundException();
+        }
+        return getListOfTransactionDTO(transactionsRepository.findAllByRemitterAndReceiver(remitter,receiver));
     }
 
 
     private TransactionDTO getTransactionDTO(Transaction transaction) {
         return new TransactionDTO(transaction.getRemitter(), transaction.getReceiver(), transaction.getAmount());
+    }
+
+    private List<TransactionDTO> getListOfTransactionDTO(List<Transaction> transactions){
+        return transactions.stream().map(this::getTransactionDTO).collect(Collectors.toList());
     }
 
     private void checkFields(Transaction transaction) throws TransactionFailedException {
