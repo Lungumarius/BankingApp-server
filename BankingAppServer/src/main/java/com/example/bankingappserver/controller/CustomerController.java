@@ -1,14 +1,16 @@
 package com.example.bankingappserver.controller;
 
-
-import com.example.bankingappserver.DTO.CustomerDTO;
 import com.example.bankingappserver.repository.CustomerRepository;
+import com.example.bankingappserver.DTO.CustomerDTO;
 import com.example.bankingappserver.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("customer")
+@RequestMapping("/customers")
 public class CustomerController {
 
     @Autowired
