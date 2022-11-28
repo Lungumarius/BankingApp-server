@@ -4,10 +4,11 @@ import com.example.bankingappserver.model.Customer;
 import com.example.bankingappserver.repository.CustomerRepository;
 import com.example.bankingappserver.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 
-
+@Service
 public class AuthServiceImp implements AuthService {
 //    @Autowired
 //    Customer customer; //always gives null customer even with Autowired

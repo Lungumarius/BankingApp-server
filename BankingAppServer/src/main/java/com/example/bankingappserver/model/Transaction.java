@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import java.time.LocalTime;
 
 @Data
 @Entity
@@ -20,9 +21,12 @@ public class Transaction {
     private Account receiver;
     private double amount;
 
+    private LocalTime dateIssued;
+
     public Transaction(Account remitter, Account receiver, double amount) {
         this.remitter = remitter;
         this.receiver = receiver;
         this.amount = amount;
+        this.dateIssued = LocalTime.now();
     }
 }

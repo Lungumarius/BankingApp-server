@@ -5,6 +5,7 @@ import com.example.bankingappserver.exceptions.TransactionFailedException;
 import com.example.bankingappserver.exceptions.TransactionNotFoundException;
 import com.example.bankingappserver.model.Account;
 import com.example.bankingappserver.model.Transaction;
+import com.example.bankingappserver.repository.AccountRepository;
 import com.example.bankingappserver.repository.TransactionsRepository;
 import com.example.bankingappserver.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ public class TransactionServiceImp implements TransactionService {
 
     @Autowired
     private TransactionsRepository transactionsRepository;
+
+    @Autowired
+    private AccountRepository accountRepository;
 
 
     @Override
@@ -72,5 +76,7 @@ public class TransactionServiceImp implements TransactionService {
         if (remitter.getBalance() >= amount) {
             throw new TransactionFailedException();
         }
+        remitter.setBalance(remitter.getBalance() - amount);
+        accountRepository.saveAndFlush(remitter);
     }
 }
