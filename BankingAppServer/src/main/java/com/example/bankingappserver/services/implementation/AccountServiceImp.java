@@ -14,7 +14,7 @@ public class AccountServiceImp implements AccountService {
     private AccountRepository accountRepository;
 
     @Override
-    public AccountDTO saveNewAccount(Account account) {
+    public Account saveNewAccount(AccountDTO accountDTO, String email) {
         return null;
     }
 

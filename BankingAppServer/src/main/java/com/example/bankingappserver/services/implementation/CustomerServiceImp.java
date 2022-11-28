@@ -8,8 +8,10 @@ import com.example.bankingappserver.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class CustomerServiceImp implements CustomerService {
@@ -34,20 +36,36 @@ public class CustomerServiceImp implements CustomerService {
         return customer;
 
     }
+    public CustomerDTO convertCustomerToDTO(Customer customer){
+        CustomerDTO customerDTO = new CustomerDTO();
+        customerDTO.setFirstName(customer.getFirstName());
+        customerDTO.setLastName(customer.getLastName());
+        customerDTO.setEmail(customer.getEmail());
+        customerDTO.setPhone(customer.getPhone());
+        customerDTO.setPassword(Arrays.toString(Base64.getDecoder().decode(customer.getPassword().getBytes())));
+        return customerDTO;
+
+    }
+
 
     @Override
-    public CustomerDTO findCustomerById(int id) {
-        return null;
+    public CustomerDTO findCustomerById(Long id) {
+
+        return convertCustomerToDTO(Objects.requireNonNull(customerRepository.findById(id).orElse(null)));
     }
 
     @Override
-    public CustomerDTO findCustomerByEmailAndPassword(String email, String password) {
+    public CustomerDTO login(String email, String password) {
         return null;
     }
 
-    @Override
-    public void addAccountToCustomer(Account account, Customer customer) {
-
+//    @Override
+//    public void addAccountToCustomer(AccountDTO accountDTO, String email) {
+//
+//    }
+    public Long findCustomerIdByMail(String email){
+        Customer customer = customerRepository.findCustomerByEmail(email);
+        return customer.getId();
     }
 
     @Override

@@ -5,11 +5,10 @@ import com.example.bankingappserver.DTO.CustomerDTO;
 import com.example.bankingappserver.repository.CustomerRepository;
 import com.example.bankingappserver.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("customer")
 public class CustomerController {
 
     @Autowired
@@ -21,6 +20,10 @@ public class CustomerController {
     public void saveCustomer(@RequestBody CustomerDTO customerDTO){
         customerService.saveNewCustomer(customerDTO);
     }
+//    @PutMapping("/{id}")
+//    public CustomerDTO getCustomerDTO(@PathVariable("id") Long id){
+//        return customerService.findCustomerIdByMail(id);
+//    }
 
 //    @GetMapping("/getall")
 //    public List<Customer> getAll(){

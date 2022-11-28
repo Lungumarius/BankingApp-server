@@ -10,14 +10,15 @@ import java.util.List;
 public interface CustomerService {
 
     public Customer convertDTOtoCustomer(CustomerDTO customerDTO);
+    public CustomerDTO convertCustomerToDTO(Customer customer);
 
     public void saveNewCustomer(CustomerDTO customerDTO);
 
-    public CustomerDTO findCustomerById(int id);
+    public CustomerDTO findCustomerById(Long id);
 
-    public CustomerDTO findCustomerByEmailAndPassword(String email, String password);
+    public Long findCustomerIdByMail(String mail);
 
-    public void addAccountToCustomer(Account account, Customer customer);
+    public CustomerDTO login(String email, String password);
 
     List<Account> findAllAccounts(Customer customer);
 }

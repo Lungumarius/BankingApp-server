@@ -5,7 +5,8 @@ import com.example.bankingappserver.model.Account;
 
 public interface AccountService {
 
-    public AccountDTO saveNewAccount(Account account);
+    // when creating a new account we need to assign it to the current logged in user
+    public Account saveNewAccount(AccountDTO accountDTO, String mail);
 
     public Account getAccountByUserId(int id);
 
