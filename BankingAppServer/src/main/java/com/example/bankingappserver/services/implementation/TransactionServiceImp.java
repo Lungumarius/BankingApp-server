@@ -24,6 +24,7 @@ public class TransactionServiceImp implements TransactionService {
     @Override
     public TransactionDTO saveTransAction(Transaction transaction) throws TransactionFailedException {
         checkFields(transaction);
+        isEnoughFunds(transaction.getRemitter(), transaction.getAmount());
         transactionsRepository.save(transaction);
         return getTransactionDTO(transaction);
     }
@@ -49,7 +50,7 @@ public class TransactionServiceImp implements TransactionService {
         if (transactionsRepository.findAllByRemitterAndReceiver(remitter, receiver).isEmpty()) {
             throw new TransactionNotFoundException();
         }
-        return getListOfTransactionDTO(transactionsRepository.findAllByRemitterAndReceiver(remitter,receiver));
+        return getListOfTransactionDTO(transactionsRepository.findAllByRemitterAndReceiver(remitter, receiver));
     }
 
 
@@ -57,13 +58,19 @@ public class TransactionServiceImp implements TransactionService {
         return new TransactionDTO(transaction.getRemitter(), transaction.getReceiver(), transaction.getAmount());
     }
 
-    private List<TransactionDTO> getListOfTransactionDTO(List<Transaction> transactions){
+    private List<TransactionDTO> getListOfTransactionDTO(List<Transaction> transactions) {
         return transactions.stream().map(this::getTransactionDTO).collect(Collectors.toList());
     }
 
     private void checkFields(Transaction transaction) throws TransactionFailedException {
         if (transaction.getRemitter() == null || transaction.getReceiver() == null || transaction.getAmount() <= 0) {
             throw new TransactionFailedException(transaction);
+        }
+    }
+
+    private void isEnoughFunds(Account remitter, double amount) throws TransactionFailedException {
+        if (remitter.getBalance() >= amount) {
+            throw new TransactionFailedException();
         }
     }
 }

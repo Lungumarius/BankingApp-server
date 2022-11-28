@@ -4,7 +4,9 @@ import com.example.bankingappserver.model.Transaction;
 
 public class TransactionFailedException extends Exception {
 
-
+    public TransactionFailedException() {
+        super("Not enough founds!");
+    }
     public TransactionFailedException(Transaction transaction) {
         getMessage(transaction);
     }

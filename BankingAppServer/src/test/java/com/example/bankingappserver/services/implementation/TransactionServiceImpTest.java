@@ -72,6 +72,13 @@ class TransactionServiceImpTest {
     }
 
     @Test
+    void whenNotEnoughFunds_thenShouldThrowException() {
+        assertThrows(TransactionFailedException.class ,()->{
+            transactionService.saveTransAction(new Transaction(remittersAccount, receiversAccount, 1_000_000.00));
+        });
+    }
+
+    @Test
     void whenSearchTransactionByRemitter_thenReturnListOfTransactions() throws TransactionNotFoundException {
         when(transactionsRepository.findAllByRemitter(remittersAccount)).thenReturn(Stream.of(transaction1, transaction2,
                 transaction3).collect(Collectors.toList()));
